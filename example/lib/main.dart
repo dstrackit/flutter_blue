@@ -142,8 +142,9 @@ class FindDevicesScreen extends StatelessWidget {
           } else {
             return FloatingActionButton(
                 child: Icon(Icons.search),
-                onPressed: () => FlutterBlue.instance
-                    .startScan(timeout: Duration(seconds: 4)));
+                onPressed: () => FlutterBlue.instance.startScan(
+                    //timeout: Duration(seconds: 4), withNames: ["someDeviceName2", "someDeviceName2"]));
+                    timeout: Duration(seconds: 4)));
           }
         },
       ),

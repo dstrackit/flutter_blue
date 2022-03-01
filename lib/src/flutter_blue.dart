@@ -86,17 +86,24 @@ class FlutterBlue {
   /// timeout calls stopStream after a specified [Duration].
   /// You can also get a list of ongoing results in the [scanResults] stream.
   /// If scanning is already in progress, this will throw an [Exception].
+  ///
+  /// serviceUuids is a list of the manufacturers UUIDs. Although GATTs are
+  /// serviceUuids do not use for filtering on these.
+  /// serviceNames are a list of names that will pass filtering. Used in
+  /// conjuction with GATT characteristic 0x2A00 Device Name.
   Stream<ScanResult> scan({
     ScanMode scanMode = ScanMode.lowLatency,
     List<Guid> withServices = const [],
     List<Guid> withDevices = const [],
+    List<String> withNames = const [],
     Duration? timeout,
     bool allowDuplicates = false,
   }) async* {
     var settings = protos.ScanSettings.create()
       ..androidScanMode = scanMode.value
       ..allowDuplicates = allowDuplicates
-      ..serviceUuids.addAll(withServices.map((g) => g.toString()).toList());
+      ..serviceUuids.addAll(withServices.map((g) => g.toString()).toList())
+      ..serviceNames.addAll(withNames.map((e) => e.toString()).toList());
 
     if (_isScanning.value == true) {
       throw Exception('Another scan is already in progress.');
@@ -155,6 +162,7 @@ class FlutterBlue {
     ScanMode scanMode = ScanMode.lowLatency,
     List<Guid> withServices = const [],
     List<Guid> withDevices = const [],
+    List<String> withNames = const [],
     Duration? timeout,
     bool allowDuplicates = false,
   }) async {
@@ -162,6 +170,7 @@ class FlutterBlue {
             scanMode: scanMode,
             withServices: withServices,
             withDevices: withDevices,
+            withNames: withNames,
             timeout: timeout,
             allowDuplicates: allowDuplicates)
         .drain();
