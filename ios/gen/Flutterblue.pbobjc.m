@@ -385,6 +385,121 @@ typedef struct ProtosScanSettings__storage_ {
 
 @end
 
+#pragma mark - ProtosPeriodicScanSettings
+
+@implementation ProtosPeriodicScanSettings
+
+@dynamic androidScanMode;
+@dynamic serviceUuidsArray, serviceUuidsArray_Count;
+@dynamic allowDuplicates;
+@dynamic serviceNamesArray, serviceNamesArray_Count;
+@dynamic periodMilliseconds;
+@dynamic timeoutMilliseconds;
+@dynamic dispositionClass;
+
+typedef struct ProtosPeriodicScanSettings__storage_ {
+  uint32_t _has_storage_[1];
+  int32_t androidScanMode;
+  int32_t periodMilliseconds;
+  int32_t timeoutMilliseconds;
+  NSMutableArray *serviceUuidsArray;
+  NSMutableArray *serviceNamesArray;
+  NSString *dispositionClass;
+} ProtosPeriodicScanSettings__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "androidScanMode",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_AndroidScanMode,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(ProtosPeriodicScanSettings__storage_, androidScanMode),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "serviceUuidsArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_ServiceUuidsArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ProtosPeriodicScanSettings__storage_, serviceUuidsArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "allowDuplicates",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_AllowDuplicates,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "serviceNamesArray",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_ServiceNamesArray,
+        .hasIndex = GPBNoHasBit,
+        .offset = (uint32_t)offsetof(ProtosPeriodicScanSettings__storage_, serviceNamesArray),
+        .flags = GPBFieldRepeated,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "periodMilliseconds",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_PeriodMilliseconds,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(ProtosPeriodicScanSettings__storage_, periodMilliseconds),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "timeoutMilliseconds",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_TimeoutMilliseconds,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(ProtosPeriodicScanSettings__storage_, timeoutMilliseconds),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeInt32,
+      },
+      {
+        .name = "dispositionClass",
+        .dataTypeSpecific.clazz = Nil,
+        .number = ProtosPeriodicScanSettings_FieldNumber_DispositionClass,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(ProtosPeriodicScanSettings__storage_, dispositionClass),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldTextFormatNameCustom | GPBFieldClearHasIvarOnZero),
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[ProtosPeriodicScanSettings class]
+                                     rootClass:[ProtosFlutterblueRoot class]
+                                          file:ProtosFlutterblueRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(ProtosPeriodicScanSettings__storage_)
+                                         flags:(GPBDescriptorInitializationFlags)(GPBDescriptorInitializationFlag_UsesClassRefs | GPBDescriptorInitializationFlag_Proto3OptionalKnown)];
+#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    static const char *extraTextFormatInfo =
+        "\003\005\022\000\006\023\000\007\020\000";
+    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
+#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+    #if defined(DEBUG) && DEBUG
+      NSAssert(descriptor == nil, @"Startup recursed!");
+    #endif  // DEBUG
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 #pragma mark - ProtosScanResult
 
 @implementation ProtosScanResult

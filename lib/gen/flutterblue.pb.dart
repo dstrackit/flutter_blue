@@ -285,6 +285,125 @@ class ScanSettings extends $pb.GeneratedMessage {
   $core.List<$core.String> get serviceNames => $_getList(3);
 }
 
+class PeriodicScanSettings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PeriodicScanSettings', createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'androidScanMode', $pb.PbFieldType.O3)
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'serviceUuids')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allowDuplicates')
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'serviceNames')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'periodMilliseconds', $pb.PbFieldType.O3, protoName: 'periodMilliseconds')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timeoutMilliseconds', $pb.PbFieldType.O3, protoName: 'timeoutMilliseconds')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dispositionClass', protoName: 'dispositionClass')
+    ..hasRequiredFields = false
+  ;
+
+  PeriodicScanSettings._() : super();
+  factory PeriodicScanSettings({
+    $core.int? androidScanMode,
+    $core.Iterable<$core.String>? serviceUuids,
+    $core.bool? allowDuplicates,
+    $core.Iterable<$core.String>? serviceNames,
+    $core.int? periodMilliseconds,
+    $core.int? timeoutMilliseconds,
+    $core.String? dispositionClass,
+  }) {
+    final _result = create();
+    if (androidScanMode != null) {
+      _result.androidScanMode = androidScanMode;
+    }
+    if (serviceUuids != null) {
+      _result.serviceUuids.addAll(serviceUuids);
+    }
+    if (allowDuplicates != null) {
+      _result.allowDuplicates = allowDuplicates;
+    }
+    if (serviceNames != null) {
+      _result.serviceNames.addAll(serviceNames);
+    }
+    if (periodMilliseconds != null) {
+      _result.periodMilliseconds = periodMilliseconds;
+    }
+    if (timeoutMilliseconds != null) {
+      _result.timeoutMilliseconds = timeoutMilliseconds;
+    }
+    if (dispositionClass != null) {
+      _result.dispositionClass = dispositionClass;
+    }
+    return _result;
+  }
+  factory PeriodicScanSettings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PeriodicScanSettings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PeriodicScanSettings clone() => PeriodicScanSettings()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PeriodicScanSettings copyWith(void Function(PeriodicScanSettings) updates) => super.copyWith((message) => updates(message as PeriodicScanSettings)) as PeriodicScanSettings; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeriodicScanSettings create() => PeriodicScanSettings._();
+  PeriodicScanSettings createEmptyInstance() => create();
+  static $pb.PbList<PeriodicScanSettings> createRepeated() => $pb.PbList<PeriodicScanSettings>();
+  @$core.pragma('dart2js:noInline')
+  static PeriodicScanSettings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PeriodicScanSettings>(create);
+  static PeriodicScanSettings? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get androidScanMode => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set androidScanMode($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAndroidScanMode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAndroidScanMode() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get serviceUuids => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.bool get allowDuplicates => $_getBF(2);
+  @$pb.TagNumber(3)
+  set allowDuplicates($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasAllowDuplicates() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAllowDuplicates() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.String> get serviceNames => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.int get periodMilliseconds => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set periodMilliseconds($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPeriodMilliseconds() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPeriodMilliseconds() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get timeoutMilliseconds => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set timeoutMilliseconds($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasTimeoutMilliseconds() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearTimeoutMilliseconds() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get dispositionClass => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set dispositionClass($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasDispositionClass() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearDispositionClass() => clearField(7);
+}
+
 class ScanResult extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScanResult', createEmptyInstance: create)
     ..aOM<BluetoothDevice>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'device', subBuilder: BluetoothDevice.create)

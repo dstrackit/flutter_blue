@@ -252,6 +252,40 @@ GPB_FINAL @interface ProtosScanSettings : GPBMessage
 
 @end
 
+#pragma mark - ProtosPeriodicScanSettings
+
+typedef GPB_ENUM(ProtosPeriodicScanSettings_FieldNumber) {
+  ProtosPeriodicScanSettings_FieldNumber_AndroidScanMode = 1,
+  ProtosPeriodicScanSettings_FieldNumber_ServiceUuidsArray = 2,
+  ProtosPeriodicScanSettings_FieldNumber_AllowDuplicates = 3,
+  ProtosPeriodicScanSettings_FieldNumber_ServiceNamesArray = 4,
+  ProtosPeriodicScanSettings_FieldNumber_PeriodMilliseconds = 5,
+  ProtosPeriodicScanSettings_FieldNumber_TimeoutMilliseconds = 6,
+  ProtosPeriodicScanSettings_FieldNumber_DispositionClass = 7,
+};
+
+GPB_FINAL @interface ProtosPeriodicScanSettings : GPBMessage
+
+@property(nonatomic, readwrite) int32_t androidScanMode;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *serviceUuidsArray;
+/** The number of items in @c serviceUuidsArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger serviceUuidsArray_Count;
+
+@property(nonatomic, readwrite) BOOL allowDuplicates;
+
+@property(nonatomic, readwrite, strong, null_resettable) NSMutableArray<NSString*> *serviceNamesArray;
+/** The number of items in @c serviceNamesArray without causing the array to be created. */
+@property(nonatomic, readonly) NSUInteger serviceNamesArray_Count;
+
+@property(nonatomic, readwrite) int32_t periodMilliseconds;
+
+@property(nonatomic, readwrite) int32_t timeoutMilliseconds;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *dispositionClass;
+
+@end
+
 #pragma mark - ProtosScanResult
 
 typedef GPB_ENUM(ProtosScanResult_FieldNumber) {

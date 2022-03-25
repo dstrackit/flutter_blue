@@ -184,6 +184,79 @@ class FlutterBlue {
     _isScanning.add(false);
   }
 
+  /// Starts a scan for Bluetooth Low Energy devices and returns a stream
+  /// of the [ScanResult] results as they are received.
+  ///
+  /// timeout calls stopStream after a specified [Duration].
+  /// You can also get a list of ongoing results in the [scanResults] stream.
+  /// If scanning is already in progress, this will throw an [Exception].
+  ///
+  /// serviceUuids is a list of the manufacturers UUIDs. Although GATTs are
+  /// serviceUuids do not use for filtering on these.
+  /// serviceNames are a list of names that will pass filtering. Used in
+  /// conjuction with GATT characteristic 0x2A00 Device Name.
+  Stream<ScanResult> scanPeriodic({
+    ScanMode scanMode = ScanMode.lowLatency,
+    List<Guid> withServices = const [],
+    List<Guid> withDevices = const [],
+    List<String> withNames = const [],
+    required int periodMilliseconds,
+    required int timeoutMilliseconds,
+    required String dispositionClass,
+    bool allowDuplicates = false,
+  }) async* {
+    var settings = protos.PeriodicScanSettings.create()
+      ..androidScanMode = scanMode.value
+      ..allowDuplicates = allowDuplicates
+      ..dispositionClass = dispositionClass
+      ..timeoutMilliseconds = timeoutMilliseconds
+      ..periodMilliseconds = periodMilliseconds
+      ..serviceUuids.addAll(withServices.map((g) => g.toString()).toList())
+      ..serviceNames.addAll(withNames.map((e) => e.toString()).toList());
+
+    if (_isScanning.value == true) {
+      throw Exception('Another scan is already in progress.');
+    }
+
+    // Emit to isScanning
+    _isScanning.add(true);
+
+    final killStreams = <Stream>[];
+    killStreams.add(_stopScanPill);
+
+    // Clear scan results list
+    _scanResults.add(<ScanResult>[]);
+
+    try {
+      await _channel.invokeMethod(
+          'startPeriodicScan', settings.writeToBuffer());
+    } catch (e) {
+      print('Error starting periodic scan.');
+      _stopScanPill.add(null);
+      _isScanning.add(false);
+      throw e;
+    }
+
+    yield* FlutterBlue.instance._methodStream
+        .where((m) => m.method == "ScanResult")
+        .map((m) => m.arguments)
+        .takeUntil(Rx.merge(killStreams))
+        .doOnDone(stopScan)
+        .map((buffer) => new protos.ScanResult.fromBuffer(buffer))
+        .map((p) {
+      final result = new ScanResult.fromProto(p);
+      final list = _scanResults.value ?? [];
+      int index = list.indexOf(result);
+      if (index != -1) {
+        list[index] = result;
+      } else {
+        list.add(result);
+      }
+      _scanResults.add(list);
+      return result;
+    });
+  }
+
   /// The list of connected peripherals can include those that are connected
   /// by other apps and that will need to be connected locally using the
   /// device.connect() method before they can be used.

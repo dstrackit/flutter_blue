@@ -254,6 +254,24 @@ public class FlutterBluePlugin implements FlutterPlugin, ActivityAware, MethodCa
                 break;
             }
 
+            case "startPeriodScan":
+            {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            activityBinding.getActivity(),
+                            new String[] {
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                            },
+                            REQUEST_FINE_LOCATION_PERMISSIONS);
+                    pendingCall = call;
+                    pendingResult = result;
+                    break;
+                }
+                startPeriodicScan(call, result);
+                break;
+            }
+
             case "stopScan":
             {
                 stopScan();
@@ -754,7 +772,53 @@ public class FlutterBluePlugin implements FlutterPlugin, ActivityAware, MethodCa
         }
     }
 
-    private void stopScan() {
+private void startPeriodicScan(MethodCall call, Result result)
+    {
+    byte[] data = call.arguments();
+    Protos.PeriodicScanSettings settings;
+    Protos.ScanSettings scanSettings;
+    try
+    {
+        settings = Protos.PeriodicScanSettings.newBuilder().mergeFrom(data).build();
+
+        Protos.ScanSettings.Builder pb = Protos.ScanSettings.newBuilder();
+        pb.setAndroidScanMode(settings.getAndroidScanMode());
+        pb.setAllowDuplicates(settings.getAllowDuplicates());
+
+            //TODO fix this
+       /* int count = settings.getServiceUuidsCount();
+        for (int i=0; i<count; i++)
+        {
+            String uuid = settings.getServiceUuids(i);
+            pb.getServiceUuids().add(uuid);
+        }
+
+        //    pb.setServiceUuids(settings.getServiceUuids());
+        pb.setServiceNames(settings.getServiceNames());
+        */
+        
+        scanSettings = pb.build();
+
+        allowDuplicates = settings.getAllowDuplicates();
+        //scanSettings.set
+
+        macDeviceScanned.clear();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            startScan21(scanSettings);
+        } else
+        {
+            throw new Exception("Periodic scan only available on versions 21 and above.");
+        }
+        result.success(null);
+    } catch (Exception e)
+    {
+        result.error("startScan", e.getMessage(), e);
+    }
+    }
+
+
+private void stopScan() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             stopScan21();
         } else {
